@@ -38,6 +38,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
+@Preview(fontScale = 1.5f)
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
