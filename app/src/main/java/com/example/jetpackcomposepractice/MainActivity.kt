@@ -24,18 +24,22 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MyApp(content = { padding -> Greeting("Android", Modifier.padding(padding)) })
+            // In Kotlin, if the last parameter of a function is a lambda,
+            // you can pass that lambda outside the parentheses.
+            // And if you don’t need parentheses for anything else,
+            // Kotlin even lets you drop the ()
+            MyApp {
+                Greeting("Android")
+            }
         }
     }
 }
 
 @Composable
-fun MyApp(content: @Composable (PaddingValues) -> Unit) {
+fun MyApp(content: @Composable () -> Unit) {
     JetpackComposePracticeTheme {
-        Scaffold(
-            modifier = Modifier.fillMaxSize()
-        ) { innerPadding ->
-            content(innerPadding)
+        Surface(color = MaterialTheme.colorScheme.background) {
+            content()
         }
     }
 }
@@ -56,5 +60,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    MyApp(content = { padding -> Greeting("Android", Modifier.padding(padding)) })
+    MyApp {
+        Greeting("Android")
+    }
 }
