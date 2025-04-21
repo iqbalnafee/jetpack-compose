@@ -24,9 +24,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MyApp() {
-                Greeting("Android")
-            }
+            MyApp(content = { padding -> Greeting("Android", Modifier.padding(padding)) })
         }
     }
 }
@@ -58,7 +56,5 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    MyApp {
-        Greeting("Android")
-    }
+    MyApp(content = { padding -> Greeting("Android", Modifier.padding(padding)) })
 }
