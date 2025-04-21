@@ -5,11 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,6 +43,16 @@ fun MyApp(content: @Composable () -> Unit) {
     }
 }
 
+@Composable
+fun MyScreenContent(names: List<String> = listOf("Android", "World", "There")) {
+    Column { // vertical
+        for(name: String in names){
+            Greeting(name = name)
+            HorizontalDivider()
+        }
+    }
+}
+
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
@@ -61,6 +70,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     MyApp {
-        Greeting("Android")
+        MyScreenContent()
     }
 }
