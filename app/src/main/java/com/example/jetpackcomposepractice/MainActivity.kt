@@ -39,19 +39,15 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Counter() {
+fun Counter(count: Int, updateCount: (Int) -> Unit) {
 
     // Creates a reactive state that remembers its value across recompositions
-    var counter by remember { // only create this variable the first time this Composable is shown. After that, keep its value between recompositions
 
-        // Creates a state holder specifically for an Int, initially 0
-        mutableIntStateOf(0)
-    }
 
     //  Jetpack Compose re-runs your @Composable function when the value of counter changes
     //  this is called recomposition.
-    Button(onClick = { counter++ }) {
-        Text(text = "I've been clicked $counter times")
+    Button(onClick = { updateCount(count + 1) }) {
+        Text(text = "I've been clicked $count times")
     }
 
     // var counter = 0
@@ -60,7 +56,7 @@ fun Counter() {
 }
 
 @Composable
-fun MyApp(content: @Composable () -> Unit) {
+fun MyApp(content: @Composable () -> Unit /* means doesn't return anything visible*/) {
     JetpackComposePracticeTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
             content()
@@ -75,7 +71,28 @@ fun MyScreenContent(names: List<String> = listOf("Android", "World", "There")) {
             Greeting(name = name)
             HorizontalDivider()
         }
-        Counter()
+
+        var counterState by remember { // only create this variable the first time this Composable is shown. After that, keep its value between recompositions
+
+            // Creates a state holder specifically for an Int, initially 0
+            mutableIntStateOf(0)
+        }
+
+        Counter(
+            count = counterState,
+            updateCount = { newCount ->
+                counterState = newCount
+            }
+        )
+
+        if(counterState > 5){
+            Text(
+                text = "I love to count",
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+
+        // moving the state of the function to the caller is called state hoisting
     }
 }
 
