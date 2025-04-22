@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -110,12 +112,16 @@ fun NameList(names: List<String>, modifier: Modifier = Modifier) {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Surface(color = Color.Yellow) {
+    var isSelected by remember {
+        mutableStateOf(false)
+    }
+    var targetColor = if(isSelected) Color.Red else Color.Transparent
+    Surface(color = targetColor) {
         Text(
             text = "Hello $name!",
             modifier = modifier
+                .clickable { isSelected = !isSelected }
                 .padding(16.dp)
-                .background(Color.Magenta)
         )
     }
 }
