@@ -1,11 +1,11 @@
 package com.example.jetpackcomposepractice
 
-import android.R.attr.value
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -27,8 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.jetpackcomposepractice.ui.theme.JetpackComposePracticeTheme
-import java.lang.reflect.Array.set
-import kotlin.coroutines.EmptyCoroutineContext.get
+import androidx.compose.runtime.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -127,7 +126,10 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     var isSelected by remember {
         mutableStateOf(false)
     }
-    var targetColor = if(isSelected) Color.Red else Color.Transparent
+    val targetColor by animateColorAsState(
+        targetValue = if(isSelected) Color.Red else Color.Transparent,
+        animationSpec = tween(4000)
+    )
     Surface(color = targetColor) {
         Text(
             text = "Hello $name!",
