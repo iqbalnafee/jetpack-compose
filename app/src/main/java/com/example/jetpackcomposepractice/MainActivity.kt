@@ -127,7 +127,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         mutableStateOf(false)
     }
     val targetColor by animateColorAsState(
-        targetValue = if(isSelected) Color.Red else Color.Transparent,
+        targetValue = if(isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
         animationSpec = tween(4000)
     )
     Surface(color = targetColor) {
