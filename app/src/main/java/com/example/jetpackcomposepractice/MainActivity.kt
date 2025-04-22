@@ -1,5 +1,6 @@
 package com.example.jetpackcomposepractice
 
+import android.R.attr.value
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,6 +27,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.jetpackcomposepractice.ui.theme.JetpackComposePracticeTheme
+import java.lang.reflect.Array.set
+import kotlin.coroutines.EmptyCoroutineContext.get
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,9 +58,7 @@ fun Counter(count: Int, updateCount: (Int) -> Unit) {
         Text(text = "I've been clicked $count times")
     }
 
-    // var counter = 0
-    // Every time the button is clicked, Compose rebuilds the UI.
-    // And each time, it sets counter = 0 again.
+
 }
 
 @Composable
@@ -80,6 +81,17 @@ fun MyScreenContent(names: List<String> = List(100) { "Hello there $it" }) {
             // Creates a state holder specifically for an Int, initially 0
             mutableIntStateOf(0)
         }
+
+        // without by
+        // val counterState = remember { mutableIntStateOf(0) }
+
+        // var counter: Int
+            // get() = counterState.intValue
+            // set(value) { counterState.intValue = value }
+
+        // var counter = 0
+        // Every time the button is clicked, Compose rebuilds the UI.
+        // And each time, it sets counter = 0 again.
 
         Counter(
             count = counterState,
