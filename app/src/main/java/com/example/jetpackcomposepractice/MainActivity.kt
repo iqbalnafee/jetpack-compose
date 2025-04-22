@@ -7,15 +7,18 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.*
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -65,12 +68,10 @@ fun MyApp(content: @Composable () -> Unit /* means doesn't return anything visib
 }
 
 @Composable
-fun MyScreenContent(names: List<String> = listOf("Android", "World", "There")) {
+fun MyScreenContent(names: List<String> = List(100) { "Hello there $it" }) {
     Column { // vertical
-        for (name: String in names) {
-            Greeting(name = name)
-            HorizontalDivider()
-        }
+
+        NameList(names, modifier = Modifier.weight(1f))
 
         var counterState by remember { // only create this variable the first time this Composable is shown. After that, keep its value between recompositions
 
@@ -85,7 +86,7 @@ fun MyScreenContent(names: List<String> = listOf("Android", "World", "There")) {
             }
         )
 
-        if(counterState > 5){
+        if (counterState > 5) {
             Text(
                 text = "I love to count",
                 modifier = Modifier.padding(16.dp)
@@ -93,6 +94,16 @@ fun MyScreenContent(names: List<String> = listOf("Android", "World", "There")) {
         }
 
         // moving the state of the function to the caller is called state hoisting
+    }
+}
+
+@Composable
+fun NameList(names: List<String>, modifier: Modifier = Modifier) {
+    LazyColumn {
+        items(items = names) {
+            Greeting(name = it)
+            HorizontalDivider()
+        }
     }
 }
 
