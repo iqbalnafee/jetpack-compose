@@ -8,6 +8,7 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -28,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.jetpackcomposepractice.ui.theme.JetpackComposePracticeTheme
 import androidx.compose.runtime.*
+import com.example.jetpackcomposepractice.columns.ColumnTest
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,10 +70,26 @@ fun MyApp(content: @Composable () -> Unit /* means doesn't return anything visib
         }
     }
 }
-
+@Composable
+fun ColumnsTest(name: String, modifier: Modifier = Modifier){
+    Surface (
+        color = MaterialTheme.colorScheme.primary,
+        modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp)
+    ) {
+        Column(modifier = modifier.fillMaxWidth().padding(24.dp)) {
+            Text("Hello!")
+            Text(name)
+        }
+    }
+}
 @Composable
 fun MyScreenContent(names: List<String> = List(100) { "Hello there $it" }) {
-    Column { // vertical
+    Column() {
+        for (name in names) {
+            ColumnsTest(name = name)
+        }
+    }
+    /*Column { // vertical
 
         NameList(names, modifier = Modifier.weight(1f))
 
@@ -107,7 +125,7 @@ fun MyScreenContent(names: List<String> = List(100) { "Hello there $it" }) {
         }
 
         // moving the state of the function to the caller is called state hoisting
-    }
+    }*/
 }
 
 @Composable
